@@ -1,11 +1,11 @@
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
-var minimumDurationMs = 1 * 60 * 60 * 1000;
+var minimumDurationMs = 60 * 60 * 1000;
 
 chrome.storage.sync.get({
-  minimumDuration: 1,
+  minimumDuration: 60,
 }, function (items) {
-  minimumDurationMs = parseInt(items.minimumDuration, 10) * 60 * 60 * 1000;
+  minimumDurationMs = parseInt(items.minimumDuration, 10) * 60 * 1000;
 });
 
 var calculateDiff = function (eventTime) {
