@@ -7,8 +7,8 @@ var calculateDuration = function (eventTime) {
 
   var duration = moment.duration(end.diff(start));
 
-  var hours = duration.hours() + ' h';
-  var minutes = duration.minutes() > 0 ? duration.minutes() + ' m' : '';
+  var hours = duration.hours() + 'h';
+  var minutes = duration.minutes() > 0 ? duration.minutes() + 'm' : '';
 
   return hours + ' ' + minutes;
 };
