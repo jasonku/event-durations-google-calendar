@@ -1,12 +1,23 @@
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
-var calculateDuration = function (eventTime) {
+var minimumDurationMs = 1 * 60 * 60 * 1000;
+
+chrome.storage.sync.get({
+  minimumDuration: 1,
+}, function (items) {
+  minimumDurationMs = parseInt(items.minimumDuration, 10) * 60 * 60 * 1000;
+});
+
+var calculateDiff = function (eventTime) {
   var split = eventTime.split(' – ');
   var start = moment(split[0], 'h:ma');
   var end = moment(split[1], 'h:ma');
 
-  var duration = moment.duration(end.diff(start));
+  return end.diff(start);
+};
 
+var formatDiff = function (diff) {
+  var duration = moment.duration(diff);
   var hours = duration.hours() + 'h';
   var minutes = duration.minutes() > 0 ? duration.minutes() + 'm' : '';
 
@@ -27,10 +38,15 @@ var injectDuration = function (mutation) {
     }
 
     var eventTime = this.innerText;
-    var duration = calculateDuration(eventTime);
-    var durationElement = $('<dt class="event-duration"><span class="chip-caption">' + duration + '</span></dt>');
+    var diff = calculateDiff(eventTime);
 
-    durationElement.insertAfter(eventTimeElement);
+    if (diff >= minimumDurationMs) {
+      var duration = formatDiff(diff);
+
+      var durationElement = $('<dt class="event-duration"><span class="chip-caption">' + duration + '</span></dt>');
+
+      durationElement.insertAfter(eventTimeElement);
+    }
   });
 };
 
