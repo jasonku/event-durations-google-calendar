@@ -13,7 +13,7 @@ var calculateDuration = function (eventTime) {
   return hours + ' ' + minutes;
 };
 
-var handleEventDrag = function (mutation) {
+var injectDuration = function (mutation) {
   $(mutation.target).find('.chip-caption').each(function () {
     var eventTimeElement = $(this.parentNode);
     var nextSibling = eventTimeElement.next();
@@ -36,9 +36,7 @@ var handleEventDrag = function (mutation) {
 
 var observer = new MutationObserver(function(mutations, observer) {
   mutations.forEach(function (mutation) {
-    if (mutation.target.className.includes('cbrd')) {
-      handleEventDrag(mutation);
-    }
+    injectDuration(mutation);
   });
 });
 
