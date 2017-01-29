@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>
+      Event Duration for Google Calendar
+    </title>
+    <style>
+      .minimumDurationContainer {
+        padding-bottom: 10px;
+      }
+      #minimumDuration {
+        width: 35px;
+      }
+      #status {
+        padding-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+
+  <h1>Event Duration for Google Calendar</h1>
+
+  <div class="minimumDurationContainer">
+    Don't show duration for events shorter than <input type="text" id="minimumDuration"> hour(s).
+  </div>
+
+  <div>
+    <button id="save">Save</button>
+  </div>
+
+  <div id="status"></div>
+
+  <script src="options.js"></script>
+  </body>
+</html>
