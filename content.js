@@ -3,7 +3,7 @@ MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 var minimumDurationMs = 60 * 60 * 1000;
 
 chrome.storage.sync.get({
-  minimumDuration: 60,
+  minimumDuration: 61,
 }, function (items) {
   minimumDurationMs = parseInt(items.minimumDuration, 10) * 60 * 1000;
 });

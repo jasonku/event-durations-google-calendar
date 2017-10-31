@@ -13,7 +13,7 @@ function saveOptions() {
 
 function restoreOptions() {
   chrome.storage.sync.get({
-    minimumDuration: 60
+    minimumDuration: 61
   }, function(items) {
     document.getElementById('minimumDuration').value = items.minimumDuration;
   });
