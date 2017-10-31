@@ -77,7 +77,9 @@ var annotateNewCalendarEvents = function (rootEl) {
 
         nextSibling[0].innerText = duration;
       } else {
-        var durationElement = $('<div class="Jmftzc gVNoLb  EiZ8Dd event-duration">' + duration + '</div>');
+        var durationElement = eventTimeElement.clone()
+          .addClass('event-duration')
+          .text(duration);
 
         durationElement.insertAfter(eventTimeElement);
       }
