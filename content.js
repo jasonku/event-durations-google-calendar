@@ -10,8 +10,17 @@ chrome.storage.sync.get({
 
 var calculateDiff = function (eventTime) {
   var split = eventTime.split(' – ');
-  var start = moment(split[0], 'h:ma');
-  var end = moment(split[1], 'h:ma');
+
+  var startRaw = split[0];
+  var endRaw = split[1];
+
+  // New calendar omits am/pm on the start if both start and end are the same am/pm.
+  if (!startRaw.match(/[a-z]/i) && endRaw.endsWith('pm')) {
+    startRaw += 'pm';
+  }
+
+  var start = moment(startRaw, 'h:ma');
+  var end = moment(endRaw, 'h:ma');
 
   return end.diff(start);
 };
@@ -24,8 +33,8 @@ var formatDiff = function (diff) {
   return hours + ' ' + minutes;
 };
 
-var injectDuration = function (mutation) {
-  $(mutation.target).find('.chip-caption').each(function () {
+var annotateOldCalendarEvents = function (rootEl) {
+  $(rootEl).find('.chip-caption').each(function () {
     var eventTimeElement = $(this.parentNode);
     var nextSibling = eventTimeElement.next();
 
@@ -48,6 +57,46 @@ var injectDuration = function (mutation) {
       durationElement.insertAfter(eventTimeElement);
     }
   });
+}
+
+var annotateNewCalendarEvents = function (rootEl) {
+  $(rootEl.getElementsByClassName('Jmftzc gVNoLb  EiZ8Dd')).each(function () {
+    var eventTimeElement = $(this);
+    var nextSibling = eventTimeElement.next();
+
+    var eventTime = this.innerText;
+    var diff = calculateDiff(eventTime);
+
+    if (diff >= minimumDurationMs) {
+      var duration = formatDiff(diff);
+
+      if (nextSibling.hasClass('event-duration')) {
+        if (nextSibling[0].innerText === duration) {
+          return;
+        }
+
+        nextSibling[0].innerText = duration;
+      } else {
+        var durationElement = $('<div class="Jmftzc gVNoLb  EiZ8Dd event-duration">' + duration + '</div>');
+
+        durationElement.insertAfter(eventTimeElement);
+      }
+    }
+  });
+};
+
+var calendarVersion;
+
+var injectDuration = function (mutation) {
+  switch (calendarVersion) {
+    case 'old':
+      annotateOldCalendarEvents(mutation.target);
+      break;
+
+    case 'new':
+      annotateNewCalendarEvents(mutation.target);
+      break;
+  }
 };
 
 var observer = new MutationObserver(function(mutations, observer) {
@@ -56,7 +105,50 @@ var observer = new MutationObserver(function(mutations, observer) {
   });
 });
 
-observer.observe(document, {
-  subtree: true,
-  attributes: true,
-});
+var maxCheckAttempts = 100;
+
+var checkCalendarVersionInterval = setInterval(function () {
+  switch (calendarVersion) {
+    case 'old':
+      console.log('Event Durations detected old Google Calendar.');
+      observer.observe(document, {
+        subtree: true,
+        attributes: true,
+      });
+      clearInterval(checkCalendarVersionInterval);
+      annotateOldCalendarEvents(document);
+      break;
+
+    case 'new':
+      console.log('Event Durations detected new Google Calendar.');
+      observer.observe(document, {
+        subtree: true,
+        childList: true,
+      });
+      clearInterval(checkCalendarVersionInterval);
+      annotateNewCalendarEvents(document);
+      break;
+
+    default:
+      if (maxCheckAttempts < 0) {
+        console.error('Error determining calendar version, please contact eventdurations@gmail.com.');
+        clearInterval(checkCalendarVersionInterval);
+        return;
+      }
+
+      maxCheckAttempts--;
+
+      var useNewCalendarButton = $('.goog-imageless-button-content:contains("Use new Calendar")');
+      var backToOldCalendarButton = $('span:contains("Back to classic Calendar")');
+
+      if (useNewCalendarButton.length > 0) {
+        calendarVersion = 'old';
+      } else if (backToOldCalendarButton.length > 0) {
+        calendarVersion = 'new';
+      } else {
+        calendarVersion = 'unknown';
+      }
+      break;
+  }
+}, 100);
+
