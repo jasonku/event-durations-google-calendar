@@ -22,6 +22,12 @@ var calculateDiff = function (eventTime) {
   var start = moment(startRaw, 'h:ma');
   var end = moment(endRaw, 'h:ma');
 
+  if (start > end) {
+    // Assume it's an overnight event, and spanning no more than 24 hours.
+    // Calendar events 24 hours or longer render in the top section, with the "All Day" events.
+    end.add(24, 'hours');
+  }
+
   return end.diff(start);
 };
 
