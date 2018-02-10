@@ -141,14 +141,11 @@ var checkCalendarVersionInterval = setInterval(function () {
       maxCheckAttempts--;
 
       var useNewCalendarButton = $('.goog-imageless-button-content:contains("Use new Calendar")');
-      var backToOldCalendarButton = $('span:contains("Back to classic Calendar")');
 
       if (useNewCalendarButton.length > 0) {
         calendarVersion = 'old';
-      } else if (backToOldCalendarButton.length > 0) {
-        calendarVersion = 'new';
       } else {
-        calendarVersion = 'unknown';
+        calendarVersion = 'new';
       }
       break;
   }
