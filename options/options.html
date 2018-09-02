@@ -5,9 +5,41 @@
       Event Duration for Google Calendar
     </title>
     <style>
+      body {
+        font-size: 14px;
+      }
+
+      .options {
+        border: 1px solid black;
+        padding: 10px;
+
+      }
+
+      .options h2 {
+        margin: 0 0 10px 0;
+      }
+
       .minimumDurationContainer {
         padding-bottom: 10px;
       }
+
+      .review {
+        margin-top: 10px;
+        font-weight: bold;
+        font-size: 16px;
+        font-style: italic;
+        color: #5ebcd6;
+      }
+
+      .webstore {
+        color: blue;
+        font-weight: bold;
+      }
+
+      .email {
+        margin-top: 10px;
+      }
+
       #minimumDuration {
         width: 35px;
       }
@@ -18,14 +50,25 @@
   </head>
   <body>
 
-  <h1>Event Duration for Google Calendar</h1>
+  <h1>Event Durations for Google Calendar</h1>
 
-  <div class="minimumDurationContainer">
-    Don't show duration for events shorter than <input type="text" id="minimumDuration"> minute(s).
+  <div class="options">
+    <h2>Options</h2>
+    <div class="minimumDurationContainer">
+      Don't show duration for events shorter than <input type="text" id="minimumDuration"> minute(s).
+    </div>
+
+    <div>
+      <button id="save">Save</button>
+    </div>
   </div>
 
-  <div>
-    <button id="save">Save</button>
+  <div class="review">
+    Please take a second to <a target="_blank" class="webstore" href="https://chrome.google.com/webstore/detail/event-durations-for-googl/elfoibhncineionfonglaickdliaikmj/reviews">leave a 5-star review</a> if this extension is helpful to you.
+  </div>
+
+  <div class="email">
+    If you are having problems with this extension, please email <a href="mailto:eventdurations@gmail.com">eventdurations@gmail.com</a>.
   </div>
 
   <div id="status"></div>
