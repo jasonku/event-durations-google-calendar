@@ -9,10 +9,16 @@ chrome.storage.sync.get({
 });
 
 var calculateDiff = function (eventTime) {
-  var split = eventTime.split(' – ');
+  var split = eventTime.split(/[-–]/);
 
   var startRaw = split[0];
+  if (startRaw) {
+    startRaw = startRaw.trim();
+  }
   var endRaw = split[1];
+  if (endRaw) {
+    endRaw = endRaw.trim();
+  }
 
   // New calendar omits am/pm on the start if both start and end are the same am/pm.
   if (!startRaw.match(/[a-z]/i) && endRaw.endsWith('pm')) {
