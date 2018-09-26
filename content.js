@@ -9,6 +9,11 @@ chrome.storage.sync.get({
 });
 
 var calculateDiff = function (eventTime) {
+  // Short (one hour or less) events show as "7:30am, <location>".
+  // Sometimes these locations have numbers and throw off the diff.
+  // Strip off those locations.
+  eventTime = eventTime.replace(/,[\s\S]*/, '');
+
   var split = eventTime.split(/[-–]/);
 
   var startRaw = split[0];
