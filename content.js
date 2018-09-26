@@ -8,13 +8,18 @@ chrome.storage.sync.get({
   minimumDurationMs = parseInt(items.minimumDuration, 10) * 60 * 1000;
 });
 
+var intlDashes = Object.values({
+  deutsch: 'bis',
+  francais: 'à',
+}).join('|');
+var dashesRegex = new RegExp('[-–]|' + intlDashes);
+
 var calculateDiff = function (eventTime) {
   // Short (one hour or less) events show as "7:30am, <location>".
   // Sometimes these locations have numbers and throw off the diff.
   // Strip off those locations.
   eventTime = eventTime.replace(/,[\s\S]*/, '');
-
-  var split = eventTime.split(/[-–]/);
+  var split = eventTime.split(dashesRegex);
 
   var startRaw = split[0];
   if (startRaw) {
