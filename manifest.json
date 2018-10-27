@@ -22,6 +22,7 @@
         "libraries/lodash.core.min.js",
         "libraries/moment.js",
         "libraries/moment-duration-format.js",
+        "lib/calculate-diff.js",
         "content.js"
       ],
       "matches": [
