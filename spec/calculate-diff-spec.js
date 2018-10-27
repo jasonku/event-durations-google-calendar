@@ -26,6 +26,11 @@ describe("calculateDiff", () => {
       expectedDiff: 15300000,
     },
     {
+      desc: 'deutsch with only pm times',
+      eventTime: '3:00 bis 5:45PM',
+      expectedDiff: 9900000,
+    },
+    {
       desc: 'francais',
       eventTime: '10:15am à 2:30pm',
       expectedDiff: 15300000,
