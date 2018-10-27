@@ -70,6 +70,21 @@ describe("calculateDiff", () => {
       eventTime: '下午3:00 - 5:30',
       expectedDiff: 9000000,
     },
+    {
+      desc: 'korean spanning am-pm',
+      eventTime: '오전 11:45~오후 2:45',
+      expectedDiff: 10800000,
+    },
+    {
+      desc: 'korean am',
+      eventTime: '오전 9:00~ 10:15',
+      expectedDiff: 4500000,
+    },
+    {
+      desc: 'korean pm',
+      eventTime: '오후 3:00~ 5:45',
+      expectedDiff: 9900000,
+    },
   ];
 
   testCases.forEach((testCase) => {
