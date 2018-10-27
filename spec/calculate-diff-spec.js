@@ -6,6 +6,16 @@ describe("calculateDiff", () => {
       expectedDiff: 15300000,
     },
     {
+      desc: 'english with only am times',
+      eventTime: '10:15 – 11:30am',
+      expectedDiff: 4500000,
+    },
+    {
+      desc: 'english with only pm times',
+      eventTime: '2:15 - 3:30pm',
+      expectedDiff: 4500000,
+    },
+    {
       desc: 'dansk',
       eventTime: '10:15am-2:30pm',
       expectedDiff: 15300000,
