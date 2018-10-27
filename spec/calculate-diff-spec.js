@@ -50,6 +50,21 @@ describe("calculateDiff", () => {
       eventTime: '10:30am, DUR-5-Hey',
       expectedDiff: NaN,
     },
+    {
+      desc: 'chinese spanning am-pm',
+      eventTime: '上午11:45 - 下午2:45',
+      expectedDiff: 10800000,
+    },
+    {
+      desc: 'chinese am',
+      eventTime: '上午9:00 - 10:15',
+      expectedDiff: 4500000,
+    },
+    {
+      desc: 'chinese pm',
+      eventTime: '下午3:00 - 5:30',
+      expectedDiff: 9000000,
+    },
   ];
 
   testCases.forEach((testCase) => {
