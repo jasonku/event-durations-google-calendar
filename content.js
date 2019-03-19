@@ -45,13 +45,37 @@ var annotateOldCalendarEvents = function (rootEl) {
 var annotateNewCalendarEvents = function (rootEl) {
   $(rootEl.getElementsByClassName('Jmftzc gVNoLb  EiZ8Dd')).each(function () {
     var eventTimeElement = $(this);
-    var nextSibling = eventTimeElement.next();
 
     var eventTime = this.innerText;
     var diff = calculateDiff(eventTime);
 
-    if (diff >= minimumDurationMs) {
-      var duration = formatDiff(diff);
+    if (isNaN(diff) || diff < minimumDurationMs) {
+      return;
+    }
+
+    var isShortEvent = diff < 70 * 60 * 1000;
+
+    var duration = formatDiff(diff);
+
+    if (isShortEvent) {
+      debugger;
+      var lastChild = eventTimeElement.children().last();
+
+      if (lastChild.hasClass('event-duration')) {
+        if (lastClass.innerText === duration) {
+          return;
+        }
+
+        lastClass.innerText = duration;
+      } else {
+        var durationElement = lastChild.clone()
+          .addClass('event-duration')
+          .text(duration);
+
+        durationElement.insertAfter(lastChild);
+      }
+    } else {
+      var nextSibling = eventTimeElement.next();
 
       if (nextSibling.hasClass('event-duration')) {
         if (nextSibling[0].innerText === duration) {
