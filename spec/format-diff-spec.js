@@ -21,9 +21,9 @@ describe("formatDiff", () => {
       expectedDecimalHourFormat: '34.29 hours',
     },
     {
-      diff: 9000000,
-      expectedHourMinuteFormat: '2h 30m',
-      expectedDecimalHourFormat: '2.5 hours',
+      diff: 3600000,
+      expectedHourMinuteFormat: '1h 0m',
+      expectedDecimalHourFormat: '1 hour',
     },
   ];
 
