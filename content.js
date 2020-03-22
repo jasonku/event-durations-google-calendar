@@ -8,14 +8,6 @@ chrome.storage.sync.get({
   minimumDurationMs = parseInt(items.minimumDuration, 10) * 60 * 1000;
 });
 
-var formatDiff = function (diff) {
-  var duration = moment.duration(diff);
-  var hours = duration.hours() + 'h';
-  var minutes = duration.minutes() > 0 ? duration.minutes() + 'm' : '';
-
-  return hours + ' ' + minutes;
-};
-
 var annotateOldCalendarEvents = function (rootEl) {
   $(rootEl).find('.chip-caption').each(function () {
     var eventTimeElement = $(this.parentNode);

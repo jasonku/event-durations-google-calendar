@@ -23,6 +23,7 @@
         "libraries/moment.js",
         "libraries/moment-duration-format.js",
         "lib/calculate-diff.js",
+        "lib/format-diff.js",
         "content.js"
       ],
       "matches": [
