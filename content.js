@@ -1,11 +1,14 @@
 MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
 
 var minimumDurationMs = 60 * 60 * 1000;
+var durationFormat = 'hourMinutes';
 
 chrome.storage.sync.get({
   minimumDuration: 61,
+  durationFormat: 'hourMinutes',
 }, function (items) {
   minimumDurationMs = parseInt(items.minimumDuration, 10) * 60 * 1000;
+  durationFormat = items.durationFormat;
 });
 
 var annotateOldCalendarEvents = function (rootEl) {
@@ -25,7 +28,7 @@ var annotateOldCalendarEvents = function (rootEl) {
     var diff = calculateDiff(eventTime);
 
     if (diff >= minimumDurationMs) {
-      var duration = formatDiff(diff);
+      var duration = formatDiff(diff, durationFormat);
 
       var durationElement = $('<dt class="event-duration"><span class="chip-caption">' + duration + '</span></dt>');
 
@@ -43,7 +46,7 @@ var annotateNewCalendarEvents = function (rootEl) {
     var diff = calculateDiff(eventTime);
 
     if (diff >= minimumDurationMs) {
-      var duration = formatDiff(diff);
+      var duration = formatDiff(diff, durationFormat);
 
       if (nextSibling.hasClass('event-duration')) {
         if (nextSibling[0].innerText === duration) {

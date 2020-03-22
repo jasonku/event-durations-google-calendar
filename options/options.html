@@ -19,7 +19,7 @@
         margin: 0 0 10px 0;
       }
 
-      .minimumDurationContainer {
+      .optionContainer {
         padding-bottom: 10px;
       }
 
@@ -44,7 +44,10 @@
         width: 35px;
       }
       #status {
-        padding-top: 10px;
+        padding-bottom: 15px;
+        color: green;
+        font-weight: bold;
+        font-size: 20px;
       }
     </style>
   </head>
@@ -52,10 +55,20 @@
 
   <h1>Event Durations for Google Calendar</h1>
 
+  <div id="status"></div>
+
   <div class="options">
     <h2>Options</h2>
-    <div class="minimumDurationContainer">
+    <div class="optionContainer">
+      <b>Minimum Duration:</b><br />
       Don't show duration for events shorter than <input type="text" id="minimumDuration"> minute(s).
+    </div>
+    <div class="optionContainer">
+      <b>Duration Format:</b><br />
+      <input type="radio" id="hourMinutes" name="durationFormat" value="hourMinutes">
+      <label for="hourMinutes">Hours and minutes ("2h 30m")</label><br />
+      <input type="radio" id="decimalHours" name="durationFormat" value="decimalHours">
+      <label for="decimalHours">Decimal hours ("2.5 hours")</label><br />
     </div>
 
     <div>
@@ -70,8 +83,6 @@
   <div class="email">
     If you are having problems with this extension, please email <a href="mailto:eventdurations@gmail.com">eventdurations@gmail.com</a>.
   </div>
-
-  <div id="status"></div>
 
   <script src="options.js"></script>
   </body>
