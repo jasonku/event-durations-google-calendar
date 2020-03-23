@@ -61,7 +61,7 @@ describe("calculateDiff", () => {
       expectedDiff: 15300000,
     },
     {
-      desc: 'portugues',
+      desc: 'portugues brasil',
       eventMetadata: '10:15am - 2:30pm, one event, Event Durations, Aceito, Local: some location, 24 de março de 2020',
       expectedDiff: 15300000,
     },
@@ -104,6 +104,36 @@ describe("calculateDiff", () => {
       desc: 'korean pm',
       eventMetadata: '오후 3시~오후 5:45, one event, Event Durations, 수락함, 위치: some-location-5, 2020년 3월 24일',
       expectedDiff: 9900000,
+    },
+    {
+      desc: 'bahasa indonesian',
+      eventMetadata: '11am sampai 1pm, one event, Event Durations, Diterima, Lokasi: some-location-5, 24 Maret 2020',
+      expectedDiff: 7200000,
+    },
+    {
+      desc: 'catala',
+      eventMetadata: 'De les 11am a les 1pm, one event, Event Durations, Acceptat, Lloc: some-location-5, 24 de de març de 2020',
+      expectedDiff: 7200000,
+    },
+    {
+      desc: 'espanol',
+      eventMetadata: 'De 11am a 1pm, one event, Event Durations, Aceptado, Ubicación: some-location-5, 24 de marzo de 2020',
+      expectedDiff: 7200000,
+    },
+    {
+      desc: 'filipino',
+      eventMetadata: '11AM hanggang 1PM, one event, Event Durations, Tinanggap, Lokasyon: some-location-5, 24 Marso 2020',
+      expectedDiff: 7200000,
+    },
+    {
+      desc: 'portugues portugal',
+      eventMetadata: '11am às 1pm, one event, Event Durations, Aceite, Localização: some-location-5, 24 de março de 2020',
+      expectedDiff: 7200000,
+    },
+    {
+      desc: 'svenska',
+      eventMetadata: '11am till 1pm, one event, Event Durations, Tackat ja, Plats: some-location-5, den 24 mars 2020',
+      expectedDiff: 7200000,
     },
   ];
 
