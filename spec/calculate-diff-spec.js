@@ -2,99 +2,114 @@ describe("calculateDiff", () => {
   const testCases = [
     {
       desc: 'english',
-      eventTime: '10:15am – 2:30pm',
+      eventMetadata: '10:15am to 2:30pm, one event, Event Durations, Accepted, Location: some location, March 24, 2020',
       expectedDiff: 15300000,
     },
     {
       desc: 'english with only am times',
-      eventTime: '10:15 – 11:30am',
+      eventMetadata: '10:15am to 11:30am, one event, Event Durations, Accepted, Location: some location, March 24, 2020',
       expectedDiff: 4500000,
     },
     {
       desc: 'english with only pm times',
-      eventTime: '2:15 - 3:30pm',
+      eventMetadata: '2:15pm to 3:30pm, one event, Event Durations, Accepted, Location: some location, March 24, 2020',
       expectedDiff: 4500000,
     },
     {
       desc: 'english with only am times that start at midnight hour',
-      eventTime: '12 – 1:15am',
+      eventMetadata: '12am to 1:15am, one event, Event Durations, Accepted, Location: some location, March 24, 2020',
+      expectedDiff: 4500000,
+    },
+    {
+      desc: 'english with military time',
+      eventMetadata: '10:15 to 14:30, one event, Event Durations, Accepted, Location: some location, March 24, 2020',
+      expectedDiff: 15300000,
+    },
+    {
+      desc: 'english with only am times with military time',
+      eventMetadata: '10:15 to 11:30, one event, Event Durations, Accepted, Location: some location, March 24, 2020',
+      expectedDiff: 4500000,
+    },
+    {
+      desc: 'english with only pm times',
+      eventMetadata: '14:15pm to 15:30pm, one event, Event Durations, Accepted, Location: some location, March 24, 2020',
+      expectedDiff: 4500000,
+    },
+    {
+      desc: 'english with only am times that start at midnight hour',
+      eventMetadata: '00:00 to 01:15, one event, Event Durations, Accepted, Location: some location, March 24, 2020',
       expectedDiff: 4500000,
     },
     {
       desc: 'dansk',
-      eventTime: '10:15am-2:30pm',
+      eventMetadata: '10:15am til 2:30pm, one event, Event Durations, Accepteret, Placering: some location, 24. marts 2020',
       expectedDiff: 15300000,
     },
     {
       desc: 'deutsch',
-      eventTime: '10:15AM bis 2:30PM',
+      eventMetadata: '10:15AM bis 2:30PM, one event, Event Durations, Angenommen, Ort: some location, 24. März 2020',
       expectedDiff: 15300000,
     },
     {
       desc: 'deutsch with only pm times',
-      eventTime: '3:00 bis 5:45PM',
+      eventMetadata: '3PM bis 5:45PM, one event, Event Durations, Angenommen, Ort: some location, 24. März 2020',
       expectedDiff: 9900000,
     },
     {
       desc: 'francais',
-      eventTime: '10:15am à 2:30pm',
+      eventMetadata: 'de 10:15am à 2:30pm, one event, Event Durations, Accepté, Lieu : some location, 24 mars 2020',
       expectedDiff: 15300000,
     },
     {
       desc: 'portugues',
-      eventTime: '10:15am até 2:30pm',
+      eventMetadata: '10:15am - 2:30pm, one event, Event Durations, Aceito, Local: some location, 24 de março de 2020',
       expectedDiff: 15300000,
     },
     {
       desc: 'japanese spanning am-pm',
-      eventTime: '午前10:15～午後2:30',
+      eventMetadata: '午前10:15～午後2:30、one event、Event Durations、承諾済み、場所: some location、2020年 3月 24日',
       expectedDiff: 15300000,
     },
     {
       desc: 'japanese only pm starting on an even hour',
-      eventTime: '午後3:00～4:45',
+      eventMetadata: '午後3時～午後4:45、one event、Event Durations、承諾済み、場所: some location、2020年 3月 24日',
       expectedDiff: 6300000,
     },
     {
-      desc: 'short events with a location with dash-numbers',
-      eventTime: '10:30am, DUR-5-Hey',
-      expectedDiff: NaN,
-    },
-    {
       desc: 'chinese spanning am-pm',
-      eventTime: '上午11:45 - 下午2:45',
+      eventMetadata: '上午11:45至下午2:45，one event，Event Durations，已接受，地点：some location，2020年3月24日',
       expectedDiff: 10800000,
     },
     {
       desc: 'chinese am',
-      eventTime: '上午9:00 - 10:15',
+      eventMetadata: '上午9点至上午10:15，one event，Event Durations，已接受，地点：some-location-5，2020年3月24',
       expectedDiff: 4500000,
     },
     {
       desc: 'chinese pm',
-      eventTime: '下午3:00 - 5:30',
+      eventMetadata: '下午3点至下午5:30，one event，Event Durations，已接受，地点：some-location-5，2020年3月24日',
       expectedDiff: 9000000,
     },
     {
       desc: 'korean spanning am-pm',
-      eventTime: '오전 11:45~오후 2:45',
+      eventMetadata: '오전 11:45~오후 2:45, one event, Event Durations, 수락함, 위치: some-location-5, 2020년 3월 24일',
       expectedDiff: 10800000,
     },
     {
       desc: 'korean am',
-      eventTime: '오전 9:00~ 10:15',
+      eventMetadata: '오전 9시~오전 10:15, one event, Event Durations, 수락함, 위치: some-location-5, 2020년 3월 24일',
       expectedDiff: 4500000,
     },
     {
       desc: 'korean pm',
-      eventTime: '오후 3:00~ 5:45',
+      eventMetadata: '오후 3시~오후 5:45, one event, Event Durations, 수락함, 위치: some-location-5, 2020년 3월 24일',
       expectedDiff: 9900000,
     },
   ];
 
   testCases.forEach((testCase) => {
     it(`should calculate diff for ${testCase.desc}`, () => {
-      const diff = calculateDiff(testCase.eventTime);
+      const diff = calculateDiff(testCase.eventMetadata);
       expect(diff).toEqual(testCase.expectedDiff);
     });
   });

@@ -42,8 +42,8 @@ var annotateNewCalendarEvents = function (rootEl) {
     var eventTimeElement = $(this);
     var nextSibling = eventTimeElement.next();
 
-    var eventTime = this.innerText;
-    var diff = calculateDiff(eventTime);
+    var eventMetadata = eventTimeElement.parent().prev().text();
+    var diff = calculateDiff(eventMetadata);
 
     if (diff >= minimumDurationMs) {
       var duration = formatDiff(diff, durationFormat);
@@ -57,6 +57,7 @@ var annotateNewCalendarEvents = function (rootEl) {
       } else {
         var durationElement = eventTimeElement.clone()
           .addClass('event-duration')
+          .removeClass('gVNoLb')
           .text(duration);
 
         durationElement.insertAfter(eventTimeElement);
