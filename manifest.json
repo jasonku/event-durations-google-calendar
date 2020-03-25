@@ -33,7 +33,6 @@
   ],
   "options_page": "options/options.html",
   "permissions": [
-    "activeTab",
     "storage"
   ]
 }
