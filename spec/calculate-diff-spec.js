@@ -143,4 +143,54 @@ describe("calculateDiff", () => {
       expect(diff).toEqual(testCase.expectedDiff);
     });
   });
+
+  const multiDayTestCases = [
+    {
+      desc: 'english that spans to midnight',
+      eventMetadata: 'April 1, 2020 at 9:45am to April 2, 2020 at 12am, asdf, Event Durations, Accepted, Location: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'english that spans past midnight',
+      eventMetadata: 'April 1, 2020 at 9:45am to April 2, 2020 at 9:44am, asdf, Event Durations, Accepted, Location: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'azərbaycan that spans to midnight',
+      eventMetadata: '1 aprel 2020, 9:45 AM - 2 aprel 2020, 12 AM, asdf, Event Durations, Qəbul edildi, Məkan: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'azərbaycan that spans past midnight',
+      eventMetadata: '1 aprel 2020, 9:45 AM - 2 aprel 2020, 9:44 AM, asdf, Event Durations, Qəbul edildi, Məkan: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'bahasa indonesian that spans to midnight',
+      eventMetadata: '1 April 2020 pukul 9.45am sampai 2 April 2020 pukul 12am, asdf, Event Durations, Diterima, Lokasi: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'bahasa indonesian that spans past midnight',
+      eventMetadata: '1 April 2020 pukul 9.45am sampai 2 April 2020 pukul 9.44am, asdf, Event Durations, Diterima, Lokasi: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'catala that spans to midnight',
+      eventMetadata: 'Del dia 1 de d’abril de 2020 a les 9:45am al dia 2 de d’abril de 2020 a les 12am, asdf, Event Durations, Acceptat, Lloc: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'catala that spans past midnight',
+      eventMetadata: 'Del dia 1 de d’abril de 2020 a les 9:45am al dia 2 de d’abril de 2020 a les 9:44am, asdf, Event Durations, Acceptat, Lloc: some location,',
+      expectedDiff: 86340000,
+    },
+  ];
+
+  multiDayTestCases.forEach((multiDayTestCase) => {
+    it(`should calculate diff for multi-day events: ${multiDayTestCase.desc}`, () => {
+      const diff = calculateDiff(multiDayTestCase.eventMetadata);
+      expect(diff).toEqual(multiDayTestCase.expectedDiff);
+    });
+  });
 });
