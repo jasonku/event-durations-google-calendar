@@ -185,6 +185,66 @@ describe("calculateDiff", () => {
       eventMetadata: 'Del dia 1 de d’abril de 2020 a les 9:45am al dia 2 de d’abril de 2020 a les 9:44am, asdf, Event Durations, Acceptat, Lloc: some location,',
       expectedDiff: 86340000,
     },
+    {
+      desc: 'dansk that spans to midnight',
+      eventMetadata: '1. april 2020 kl. 9:45am til 2. april 2020 kl. 12am, asdf, Event Durations, Accepteret, Placering: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'dansk that spans past midnight',
+      eventMetadata: '1. april 2020 kl. 9:45am til 2. april 2020 kl. 9:44am, asdf, Event Durations, Accepteret, Placering: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'deutsch that spans to midnight',
+      eventMetadata: '1. April 2020 um 9:45AM bis 2. April 2020 um 12AM, asdf, Event Durations, Angenommen, Ort: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'deutsch that spans past midnight',
+      eventMetadata: '1. April 2020 um 9:45AM bis 2. April 2020 um 9:44AM, asdf, Event Durations, Angenommen, Ort: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'espanol that spans to midnight',
+      eventMetadata: 'Del 1 de abril de 2020 a las 9:45am al 2 de abril de 2020 a las 12am, asdf, Event Durations, Aceptado, Ubicación: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'espanol that spans past midnight',
+      eventMetadata: 'Del 1 de abril de 2020 a las 9:45am al 2 de abril de 2020 a las 9:44am, asdf, Event Durations, Aceptado, Ubicación: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'euskara that spans to midnight',
+      eventMetadata: '2020(e)ko apirilaren 1(a) (9:45 AM) - 2020(e)ko apirilaren 2(a) (12 AM), asdf, Event Durations, Onartuta, Kokapena: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'euskara that spans past midnight',
+      eventMetadata: '2020(e)ko apirilaren 1(a) (9:45 AM) - 2020(e)ko apirilaren 2(a) (9:44 AM), asdf, Event Durations, Onartuta, Kokapena: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'filipino that spans to midnight',
+      eventMetadata: '1 Abril 2020 nang 9:45AM hanggang 2 Abril 2020 nang 12AM, asdf, Event Durations, Tinanggap, Lokasyon: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'filipino that spans past midnight',
+      eventMetadata: '1 Abril 2020 nang 9:45AM hanggang 2 Abril 2020 nang 9:44AM, asdf, Event Durations, Tinanggap, Lokasyon: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'francais that spans to midnight',
+      eventMetadata: 'du 1 avril 2020, 9:45am au 2 avril 2020, 12am, asdf, Event Durations, Accepté, Lieu : some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'francais that spans past midnight',
+      eventMetadata: 'du 1 avril 2020, 9:45am au 2 avril 2020, 9:44am, asdf, Event Durations, Accepté, Lieu : some location,',
+      expectedDiff: 86340000,
+    },
   ];
 
   multiDayTestCases.forEach((multiDayTestCase) => {
