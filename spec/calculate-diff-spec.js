@@ -141,8 +141,18 @@ describe("calculateDiff", () => {
       expectedDiff: 7200000,
     },
     {
+      desc: 'romana',
+      eventMetadata: '11 am - 1 pm, single, Event Durations, Acceptat, Fără locație, 30 martie 2020',
+      expectedDiff: 7200000,
+    },
+    {
       desc: 'svenska',
       eventMetadata: '11am till 1pm, one event, Event Durations, Tackat ja, Plats: some-location-5, den 24 mars 2020',
+      expectedDiff: 7200000,
+    },
+    {
+      desc: 'turkish',
+      eventMetadata: '11am ile 1pm arası, single, Event Durations, Kabul edildi, Konum bilgisi yok, 30 Mart 2020',
       expectedDiff: 7200000,
     },
   ];
@@ -293,6 +303,111 @@ describe("calculateDiff", () => {
     {
       desc: 'portugues (portugal) that spans past midnight',
       eventMetadata: '1 de abril de 2020 às 9:45am a 2 de abril de 2020 às 9:44am, asdf, Event Durations, Aceite, Localização: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'romana that spans to midnight',
+      eventMetadata: '1 aprilie 2020, 9:45 am - 2 aprilie 2020, 12 am, asdf, Event Durations, Acceptat, Locația: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'romana that spans past midnight',
+      eventMetadata: '1 aprilie 2020, 9:45 am - 2 aprilie 2020, 9:44 am, asdf, Event Durations, Acceptat, Locația: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'svenska that spans to midnight',
+      eventMetadata: 'den 1 april 2020 kl. 9:45am till den 2 april 2020 kl. 12am, asdf, Event Durations, Tackat ja, Plats: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'svenska that spans past midnight',
+      eventMetadata: 'den 1 april 2020 kl. 9:45am till den 2 april 2020 kl. 9:44am, asdf, Event Durations, Tackat ja, Plats: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'turkish that spans to midnight',
+      eventMetadata: '1 Nisan 2020 saat 9:45am ile 2 Nisan 2020 saat 12am arası, asdf, Event Durations, Kabul edildi, Konum: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'turkish that spans past midnight',
+      eventMetadata: '1 Nisan 2020 saat 9:45am ile 2 Nisan 2020 saat 9:44am arası, asdf, Event Durations, Kabul edildi, Konum: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'chinese (中文 (香港)) that spans to midnight',
+      eventMetadata: '2020年4月1日 上午9:45至 2020年4月2日 上午12時，asdf，Event Durations，已接受，地點：some location，',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'chinese (中文 (香港)) that spans past midnight',
+      eventMetadata: '2020年4月1日 上午9:45至 2020年4月2日 上午9:44，asdf，Event Durations，已接受，地點：some location，',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'chinese (中文 (香港)) that starts on an even hour and spans past midnight',
+      eventMetadata: '2020年3月31日 上午10時至 2020年4月1日 上午9:59，multi，Event Durations，已接受，沒有位置資料，',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'chinese (中文（简体）) that spans to midnight',
+      eventMetadata: '2020年4月1日上午9:45至 2020年4月2日上午12点，asdf，Event Durations，已接受，地点：some location，',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'chinese (中文（简体）) that spans past midnight',
+      eventMetadata: '2020年4月1日上午9:45至 2020年4月2日上午9:44，asdf，Event Durations，已接受，地点：some location，',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'chinese (中文（简体）) that starts on an even hour and spans past midnight',
+      eventMetadata: '2020年3月31日上午10点至 2020年4月1日上午9:59，multi，Event Durations，已接受，没有位置信息， ',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'chinese (中文（繁體）that spans to midnight',
+      eventMetadata: '2020年4月1日 上午9:45 至 2020年4月2日 上午12點，asdf，Event Durations，已接受，地點：some location，',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'chinese (中文 （繁體）that spans past midnight',
+      eventMetadata: '2020年4月1日 上午9:45 至 2020年4月2日 上午9:44，asdf，Event Durations，已接受，地點：some location，',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'chinese (中文（繁體）that starts on an even hour and spans past midnight',
+      eventMetadata: '2020年3月31日 上午10點 至 2020年4月1日 上午9:59，multi，Event Durations，已接受，沒有任何地點資訊，',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'japanese that spans to midnight',
+      eventMetadata: '2020年 4月 1日 午前9:45～2020年 4月 2日 午前12時、asdf、Event Durations、承諾済み、場所: some location、',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'japanese that spans past midnight',
+      eventMetadata: '2020年 4月 1日 午前9:45～2020年 4月 2日 午前9:44、asdf、Event Durations、承諾済み、場所: some location、',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'japanese that starts on an even hour and spans past midnight',
+      eventMetadata: '2020年 3月 31日 午前10時～2020年 4月 1日 午前9:59、multi、Event Durations、承諾済み、場所の指定なし、',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'korean that spans to midnight',
+      eventMetadata: '2020년 4월 1일 오전 9:45~2020년 4월 2일 오전 12시, asdf, Event Durations, 수락함, 위치: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'korean that spans past midnight',
+      eventMetadata: '2020년 4월 1일 오전 9:45~2020년 4월 2일 오전 9:44, asdf, Event Durations, 수락함, 위치: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'korean that starts on an even hour and spans past midnight',
+      eventMetadata: '2020년 3월 31일 오전 10시~2020년 4월 1일 오전 9:59, multi, Event Durations, 수락함, 위치 없음,',
       expectedDiff: 86340000,
     },
   ];

@@ -32,6 +32,7 @@ Calculates and displays event durations on Google Calendar events. Manage your t
 * 中文（简体）
 * 中文（繁體）
 * 日本語
+* 한국어
 
 ## Testing
 
