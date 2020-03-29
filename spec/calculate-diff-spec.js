@@ -131,6 +131,11 @@ describe("calculateDiff", () => {
       expectedDiff: 7200000,
     },
     {
+      desc: 'portugues brasil',
+      eventMetadata: '11am - 1pm, single, Event Durations, Aceito, Nenhum local, 30 de março de 2020',
+      expectedDiff: 7200000,
+    },
+    {
       desc: 'portugues portugal',
       eventMetadata: '11am às 1pm, one event, Event Durations, Aceite, Localização: some-location-5, 24 de março de 2020',
       expectedDiff: 7200000,
@@ -270,7 +275,26 @@ describe("calculateDiff", () => {
       eventMetadata: 'Van 1. april 2020 om 9:45am tot 2. april 2020 om 9:44am, asdf, Event Durations, Geaccepteerd, Locatie: some location,',
       expectedDiff: 86340000,
     },
-
+    {
+      desc: 'portugues (brasil) that spans to midnight',
+      eventMetadata: '1 de abril de 2020 às 9:45am - 2 de abril de 2020 às 12am, asdf, Event Durations, Aceito, Local: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'portugues (brasil) that spans past midnight',
+      eventMetadata: '1 de abril de 2020 às 9:45am - 2 de abril de 2020 às 9:44am, asdf, Event Durations, Aceito, Local: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'portugues (portugal) that spans to midnight',
+      eventMetadata: '1 de abril de 2020 às 9:45am a 2 de abril de 2020 às 12am, asdf, Event Durations, Aceite, Localização: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'portugues (portugal) that spans past midnight',
+      eventMetadata: '1 de abril de 2020 às 9:45am a 2 de abril de 2020 às 9:44am, asdf, Event Durations, Aceite, Localização: some location,',
+      expectedDiff: 86340000,
+    },
   ];
 
   multiDayTestCases.forEach((multiDayTestCase) => {
