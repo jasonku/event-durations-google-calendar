@@ -1,3 +1,5 @@
+// console.log(document.querySelector("div[data-eventchip]").getElementsByClassName('ynRLnc')[0].innerText);
+
 describe("calculateDiff", () => {
   const testCases = [
     {
@@ -128,6 +130,11 @@ describe("calculateDiff", () => {
     {
       desc: 'nederlands',
       eventMetadata: 'Van 11am tot 1pm, single, Event Durations, Geaccepteerd, Geen locatie, 30. maart 2020',
+      expectedDiff: 7200000,
+    },
+    {
+      desc: 'polski',
+      eventMetadata: 'Od 11am do 1pm, asdf, Event Durations, Zaakceptowano, Brak lokalizacji, 31 marca 2020',
       expectedDiff: 7200000,
     },
     {
@@ -283,6 +290,16 @@ describe("calculateDiff", () => {
     {
       desc: 'nederlands that spans past midnight',
       eventMetadata: 'Van 1. april 2020 om 9:45am tot 2. april 2020 om 9:44am, asdf, Event Durations, Geaccepteerd, Locatie: some location,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'polski that spans to midnight',
+      eventMetadata: 'Od 1 kwietnia 2020, 9:45am do 2 kwietnia 2020, 12am, asdf, Event Durations, Zaakceptowano, Lokalizacja: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'polski that spans past midnight',
+      eventMetadata: 'Od 31 marca 2020, 9:45am do 1 kwietnia 2020, 9:44am, multi, Event Durations, Zaakceptowano, Brak lokalizacji,',
       expectedDiff: 86340000,
     },
     {

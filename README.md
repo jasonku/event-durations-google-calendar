@@ -23,6 +23,7 @@ Calculates and displays event durations on Google Calendar events. Manage your t
 * Français
 * Italiano
 * Nederlands
+* Polski
 * Português (Brasil)
 * Português (Portugal)
 * Română
@@ -37,3 +38,7 @@ Calculates and displays event durations on Google Calendar events. Manage your t
 ## Testing
 
 To run specs, open `spec/SpecRunner.html` in a browser.
+
+## Packing
+
+To pack for publishing: `zip -r app.zip * -x "*.git*"`.
