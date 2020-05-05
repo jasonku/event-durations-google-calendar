@@ -162,6 +162,11 @@ describe("calculateDiff", () => {
       eventMetadata: '11am ile 1pm arası, single, Event Durations, Kabul edildi, Konum bilgisi yok, 30 Mart 2020',
       expectedDiff: 7200000,
     },
+    {
+      desc: 'russian',
+      eventMetadata: 'С 11AM до 1PM, single, Event Durations, Приглашение принято, Место проведения неизвестно, 30 марта 2020',
+      expectedDiff: 7200000,
+    },
   ];
 
   testCases.forEach((testCase) => {
@@ -425,6 +430,21 @@ describe("calculateDiff", () => {
     {
       desc: 'korean that starts on an even hour and spans past midnight',
       eventMetadata: '2020년 3월 31일 오전 10시~2020년 4월 1일 오전 9:59, multi, Event Durations, 수락함, 위치 없음,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'russian that spans to midnight',
+      eventMetadata: 'С 9:45AM 30 марта 2020 до 12AM 31 марта 2020, asdf, Event Durations, Приглашение принято, Место проведения: some location,',
+      expectedDiff: 51300000,
+    },
+    {
+      desc: 'russian that spans past midnight',
+      eventMetadata: 'С 9:45AM 31 марта 2020 до 9:44AM 1 апреля 2020, multi, Event Durations, Приглашение принято, Место проведения неизвестно,',
+      expectedDiff: 86340000,
+    },
+    {
+      desc: 'russian that starts on an even hour and spans past midnight',
+      eventMetadata: 'С 10AM 31 марта 2020 до 9:59AM 1 апреля 2020, multi, Event Durations, Приглашение принято, Место проведения неизвестно,',
       expectedDiff: 86340000,
     },
   ];
