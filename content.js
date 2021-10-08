@@ -42,7 +42,7 @@ var annotateNewCalendarEvents = function (rootEl) {
     var eventTimeElement = $(this);
     var nextSibling = eventTimeElement.next();
 
-    var eventMetadata = eventTimeElement.parent().prev().text();
+    var eventMetadata = eventTimeElement.parent().parent().prev().text();
     var diff = calculateDiff(eventMetadata);
 
     if (diff >= minimumDurationMs) {
