@@ -38,7 +38,7 @@ var annotateOldCalendarEvents = function (rootEl) {
 }
 
 var annotateNewCalendarEvents = function (rootEl) {
-  $(rootEl.getElementsByClassName('Jmftzc gVNoLb  EiZ8Dd')).each(function () {
+  $(rootEl.getElementsByClassName('lhydbb gVNoLb  EiZ8Dd qqMC3e')).each(function () {
     var eventTimeElement = $(this);
     var nextSibling = eventTimeElement.next();
 
