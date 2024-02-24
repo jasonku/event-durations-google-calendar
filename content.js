@@ -38,11 +38,19 @@ var annotateOldCalendarEvents = function (rootEl) {
 }
 
 var annotateNewCalendarEvents = function (rootEl) {
-  $(rootEl.getElementsByClassName('lhydbb gVNoLb  EiZ8Dd qqMC3e')).each(function () {
-    var eventTimeElement = $(this);
-    var nextSibling = eventTimeElement.next();
+  $("[data-eventchip]").each(function () {
+    var eventChipElement = this;
+    if (eventChipElement.children.length <= 1) {
+      return;
+    }
+    var eventTimeElement = eventChipElement.children[1].children[0].children[1];
 
-    var eventMetadata = eventTimeElement.parent().parent().prev().text();
+    if (!eventTimeElement) {
+      return;
+    }
+
+    var nextSibling = $(eventTimeElement.nextElementSibling);
+    var eventMetadata = eventChipElement.children[0].textContent;
     var diff = calculateDiff(eventMetadata);
 
     if (diff >= minimumDurationMs) {
@@ -55,9 +63,8 @@ var annotateNewCalendarEvents = function (rootEl) {
 
         nextSibling[0].innerText = duration;
       } else {
-        var durationElement = eventTimeElement.clone()
+        var durationElement = $(eventTimeElement).clone()
           .addClass('event-duration')
-          .removeClass('gVNoLb')
           .text(duration);
 
         durationElement.insertAfter(eventTimeElement);
